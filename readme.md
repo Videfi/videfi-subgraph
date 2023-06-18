@@ -10,3 +10,7 @@ yarn
 # generate schemas
 yarn codegen
 ```
+
+### Related repositories
+1. Videfi Frontend - [https://github.com/Videfi/videfi-front](https://github.com/Videfi/videfi-front)
+2. Videfi Contract - [https://github.com/Videfi/videfi-contract](https://github.com/Videfi/videfi-contract)
