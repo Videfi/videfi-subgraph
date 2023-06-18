@@ -1,0 +1,73 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "content",
+        "type": "address"
+      }
+    ],
+    "name": "ContentCreated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_contentName",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_contentSymbol",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_tokenURI",
+        "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_limitAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "_paymentToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_mintPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_beneficiary",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_isDAOBeneficiary",
+        "type": "bool"
+      },
+      {
+        "internalType": "address[]",
+        "name": "_tokenGates",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "_tokenGateAmounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "deploy",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

@@ -1,0 +1,41 @@
+type Token @entity {
+  id: ID!
+  symbol: String!
+  name: String!
+  decimals: BigInt!
+}
+
+type Content @entity(immutable: true) {
+  id: ID!
+  contentName: String!
+  contentSymbol: String!
+  tokenURI: String!
+  limitAmount: BigInt!
+  paymentToken: Token!
+  mintPrice: BigInt!
+  beneficiary: Beneficiary!
+  isDAOBeneficiary: Boolean!
+}
+
+type ContentNFT @entity(immutable: true) {
+  id: ID!
+  content: Content!
+  owner: User!
+}
+
+type Beneficiary @entity {
+  id: ID!
+  contents: [Content!] @derivedFrom(field: "beneficiary")
+  totalContents: BigInt!
+}
+
+type User @entity {
+  id: ID!
+  contents: [ContentNFT!] @derivedFrom(field: "owner")
+  totalContents: BigInt!
+}
+
+type App @entity {
+  id: ID!
+  totalContents: BigInt!
+}

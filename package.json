@@ -1,0 +1,20 @@
+{
+  "name": "scaling-tree",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ scaling-tree",
+    "create-local": "graph create --node http://localhost:8020/ scaling-tree",
+    "remove-local": "graph remove --node http://localhost:8020/ scaling-tree",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 scaling-tree",
+    "test": "graph test"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.43.0",
+    "@graphprotocol/graph-ts": "0.29.1"
+  },
+  "devDependencies": {
+    "matchstick-as": "^0.5.2"
+  }
+}
