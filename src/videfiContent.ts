@@ -2,24 +2,28 @@ import { App, ContentNFT, User } from "../generated/schema";
 import { Transfer } from "../generated/templates/VidefiContent/VidefiContent";
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { getOrCreateContent } from "./videfiContentDeployer";
+import { ADDRESS_ZERO } from "./helpers";
 
 const APP_ID = "app";
 
 export function handleTransferEvent(event: Transfer): void {
-  if (event.params.from == new Address(0)) {
+  if (event.params.from == Address.fromString(ADDRESS_ZERO)) {
     handleMint(event);
   } else {
     handleTransfer(event);
   }
 }
 
-function handleMint(event: Transfer): void {
-  const nftAddress = event.transaction.to;
-  const id = nftAddress!.toHex() + "-" + event.params.tokenId.toString();
+export function handleMint(event: Transfer): void {
+  // Skip the first item of the collection
+  if (event.params.tokenId.equals(BigInt.fromI32(0))) return;
+  
+  const nftAddress = event.transaction.to!;
+  const id = nftAddress.toHex() + "-" + event.params.tokenId.toString();
 
   let app = getOrCreateApp();
   let owner = getOrCreateUser(event.params.to);
-  let content = getOrCreateContent(event.params.to);
+  let content = getOrCreateContent(nftAddress);
 
   let contentNFT = new ContentNFT(id);
   contentNFT.content = content.id;
@@ -33,7 +37,7 @@ function handleMint(event: Transfer): void {
   contentNFT.save();
 }
 
-function handleTransfer(event: Transfer): void {
+export function handleTransfer(event: Transfer): void {
   const nftAddress = event.transaction.to;
   const id = nftAddress!.toHex() + "-" + event.params.tokenId.toString();
 

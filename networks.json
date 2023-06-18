@@ -4,5 +4,11 @@
       "address": "0x60edA798a0503d81CCB2ACA7b2A098e1892e759d",
       "startBlock": 36968846
     }
+  },
+  "goerli": {
+    "VidefiContentDeployer": {
+      "address": "0xBa5503F86e2E1bB51fF1D72131Ad20539cABF913",
+      "startBlock": 9198102
+    }
   }
 }

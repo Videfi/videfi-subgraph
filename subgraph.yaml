@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum
     name: VidefiContentDeployer
-    network: mumbai
+    network: goerli
     source:
-      address: "0x60edA798a0503d81CCB2ACA7b2A098e1892e759d"
+      address: "0xBa5503F86e2E1bB51fF1D72131Ad20539cABF913"
       abi: VidefiContentDeployer
-      startBlock: 36968846
+      startBlock: 9198102
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -31,7 +31,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: VidefiContent
-    network: mumbai
+    network: goerli
     source:
       abi: VidefiContent
     mapping:

@@ -2,12 +2,14 @@ import { ContentCreated } from "../generated/VidefiContentDeployer/VidefiContent
 import { ERC20 } from "../generated/VidefiContentDeployer/ERC20";
 import { VidefiContent } from "../generated/templates/VidefiContent/VidefiContent";
 import { VidefiContent as VidefiContentDataSource } from "../generated/templates";
-import { Beneficiary, Content, Token } from "../generated/schema";
+import { Beneficiary, Content, ContentNFT, Token } from "../generated/schema";
 import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { getOrCreateApp, getOrCreateUser } from "./videfiContent";
 
 export function handleContentCreated(event: ContentCreated): void {
   let content = getOrCreateContent(event.params.content);
   VidefiContentDataSource.create(event.params.content);
+  createFirstNFT(content);
   content.save();
 }
 
@@ -48,7 +50,9 @@ export function getOrCreateContent(id: Address): Content {
     if (!beneficiary.reverted) {
       let beneficiaryData = getOrCreateBeneficiary(beneficiary.value);
       content.beneficiary = beneficiaryData.id;
-      beneficiaryData.totalContents = beneficiaryData.totalContents.plus(BigInt.fromI32(1));
+      beneficiaryData.totalContents = beneficiaryData.totalContents.plus(
+        BigInt.fromI32(1)
+      );
       beneficiaryData.save();
     }
     if (!isDAOBeneficiary.reverted) {
@@ -58,6 +62,25 @@ export function getOrCreateContent(id: Address): Content {
     content.save();
   }
   return content;
+}
+
+export function createFirstNFT(content: Content): void {
+  const nftAddress = content.id;
+  const id = nftAddress + "-" + "0";
+
+  let app = getOrCreateApp();
+  let owner = getOrCreateUser(Address.fromString(nftAddress));
+
+  let contentNFT = new ContentNFT(id);
+  contentNFT.content = content.id;
+  contentNFT.owner = owner.id;
+
+  owner.totalContents = owner.totalContents.plus(BigInt.fromI32(1));
+  app.totalContents = app.totalContents.plus(BigInt.fromI32(1));
+
+  owner.save();
+  app.save();
+  contentNFT.save();
 }
 
 export function getOrCreateBeneficiary(id: Address): Beneficiary {
